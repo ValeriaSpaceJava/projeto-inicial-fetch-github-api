@@ -2,6 +2,7 @@ import { getUser } from '/src/scripts/services/user.js'
 import { getRepositories } from '/src/scripts/services/repositories.js'
 import { user } from '/src/scripts/objects/user.js'
 import { screen } from '/src/scripts/objects/screen.js'
+import { getEvents } from '/src/scripts/services/events.js'
 
 
 document.getElementById('btn-search').addEventListener('click', () => {
@@ -24,11 +25,13 @@ document.getElementById('input-search').addEventListener('keyup', (e)=>{
 async function getUserData(userName){
     const userResponse = await getUser(userName)
     const repositoriesResponse = await getRepositories(userName)
+    const userEvents = await getEvents(userName)
    
     user.setInfo(userResponse)
     user.setRepositories(repositoriesResponse)
+    user.setEvents(userEvents)
 
-    
+    console.log(await repositoriesResponse)
 
     screen.renderUser(user)
 }
